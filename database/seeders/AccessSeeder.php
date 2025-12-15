@@ -23,6 +23,7 @@ class AccessSeeder extends Seeder
         \App\Models\Access::updateOrCreate(['destino' => '/users'], ['tipo' => 'menu', 'descripcion' => 'Usuarios', 'icono' => 'fa-solid fa-users', 'orden' => 1, 'parent_id' => $config->id]);
         \App\Models\Access::updateOrCreate(['destino' => '/roles'], ['tipo' => 'menu', 'descripcion' => 'Roles', 'icono' => 'fa-solid fa-shield-halved', 'orden' => 2, 'parent_id' => $config->id]);
         \App\Models\Access::updateOrCreate(['destino' => '/accesses'], ['tipo' => 'menu', 'descripcion' => 'Accesos', 'icono' => 'fa-solid fa-key', 'orden' => 3, 'parent_id' => $config->id]);
+        \App\Models\Access::updateOrCreate(['destino' => '/settings'], ['tipo' => 'menu', 'descripcion' => 'Preferencias', 'icono' => 'fa-solid fa-sliders', 'orden' => 4, 'parent_id' => $config->id]);
 
         // Assign all accesses to Admin
         $admin = \App\Models\Role::where('nombre_corto', 'Admin')->first();

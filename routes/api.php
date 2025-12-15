@@ -24,6 +24,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('roles', RoleController::class);
         Route::apiResource('accesses', AccessController::class);
         
+        // Settings
+        Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index']);
+        Route::post('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'update']);
+        Route::post('/settings/test-email', [\App\Http\Controllers\Admin\SettingController::class, 'testEmail']);
+        
         // Inventory Routes
         Route::apiResource('inventory/categories', \App\Http\Controllers\Admin\Inventory\CategoryController::class);
         Route::apiResource('inventory/locations', \App\Http\Controllers\Admin\Inventory\LocationController::class);

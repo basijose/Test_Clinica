@@ -39,6 +39,9 @@ const router = createRouter({
                 // Profile
                 { path: 'profile', component: () => import('../views/Profile.vue'), name: 'Profile', meta: { requiresAuth: true } },
 
+                // Settings
+                { path: 'settings', component: () => import('../views/Admin/Settings/Index.vue'), name: 'Settings', meta: { requiresAuth: true } },
+
                 // Inventory
                 { path: 'inventory', component: () => import('../views/Admin/Inventory/Index.vue'), name: 'Inventory', meta: { requiresAuth: true } },
 
