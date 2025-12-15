@@ -171,6 +171,10 @@ const toggleSidebar = () => {
 };
 
 const toggleSubmenu = (id) => {
+    if (isSidebarCollapsed.value) {
+        isSidebarCollapsed.value = false;
+    }
+    
     if (openSubmenus.value.includes(id)) {
         openSubmenus.value = openSubmenus.value.filter(itemId => itemId !== id);
     } else {
