@@ -13,6 +13,8 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/login', component: Login, name: 'Login' },
+        { path: '/forgot-password', component: () => import('../views/ForgotPassword.vue'), name: 'ForgotPassword' },
+        { path: '/reset-password/:token', component: () => import('../views/ResetPassword.vue'), name: 'ResetPassword' },
         {
             path: '/',
             component: () => import('../layouts/AppLayout.vue'),
