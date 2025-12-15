@@ -72,6 +72,7 @@ const handleSubmit = async () => {
     message.value = '';
     error.value = '';
     try {
+        await axios.get('/sanctum/csrf-cookie');
         const response = await axios.post('/api/reset-password', {
             token: token.value,
             email: email.value,
