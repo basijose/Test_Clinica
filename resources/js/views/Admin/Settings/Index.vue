@@ -18,15 +18,40 @@
                 <h4 class="text-lg font-semibold text-gray-700 capitalize mb-4">Datos Servidor de Mail</h4>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div v-for="setting in settings.mail" :key="setting.id" class="col-span-1">
+                    <div v-for="setting in settings.mail" :key="setting.id" class="col-span-1" v-show="setting.key !== 'mail_mailer'">
                         <label class="block text-sm font-medium text-gray-700">{{ setting.description }}</label>
-                        <input v-if="setting.type !== 'boolean'" :type="setting.type" v-model="setting.value"
+                        
+                        <!-- Text Inputs (Default) -->
+                        <input v-if="setting.type === 'text' && setting.key !== 'mail_encryption'" type="text" v-model="setting.value"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
                         
-                        <select v-else v-model="setting.value" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                        <!-- Password Input with Toggle -->
+                        <div v-else-if="setting.type === 'password'" class="relative">
+                            <input :type="showPasswords[setting.key] ? 'text' : 'password'" v-model="setting.value"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 pr-10">
+                            <button type="button" @click="togglePassword(setting.key)"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-500 hover:text-gray-700 focus:outline-none mt-1">
+                                <i :class="showPasswords[setting.key] ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                            </button>
+                        </div>
+
+                        <!-- Encryption Select -->
+                        <select v-else-if="setting.key === 'mail_encryption'" v-model="setting.value"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                            <option value="tls">TLS</option>
+                            <option value="ssl">SSL</option>
+                            <option value="">Ninguna</option>
+                        </select>
+                        
+                        <!-- Boolean Select -->
+                        <select v-else-if="setting.type === 'boolean'" v-model="setting.value" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
                             <option value="1">Sí</option>
                             <option value="0">No</option>
                         </select>
+                        
+                        <!-- Number Input -->
+                        <input v-else-if="setting.type === 'number'" type="number" v-model="setting.value"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
                     </div>
                 </div>
             </div>
@@ -78,6 +103,11 @@ import axios from 'axios';
 const settings = ref({});
 const openTestModal = ref(false);
 const testEmailAddress = ref('');
+const showPasswords = ref({});
+
+const togglePassword = (key) => {
+    showPasswords.value[key] = !showPasswords.value[key];
+};
 
 const fetchSettings = async () => {
     try {
