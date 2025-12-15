@@ -3,6 +3,17 @@
         <h3 class="text-gray-700 text-3xl font-medium">Preferencias</h3>
 
         <div class="mt-8">
+            <!-- Debug Info -->
+            <div v-if="!settings.mail" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6">
+                <p class="font-bold">No se encontraron configuraciones de correo.</p>
+                <p>Si acabas de instalar esto, asegúrate de ejecutar el seeder:</p>
+                <code class="bg-yellow-200 p-1 rounded">php artisan db:seed --class=SettingSeeder</code>
+                <div class="mt-4">
+                    <p class="text-sm font-semibold">Estructura de datos recibida (Debug):</p>
+                    <pre class="text-xs bg-gray-100 p-2 rounded mt-1 overflow-auto max-h-40">{{ settings }}</pre>
+                </div>
+            </div>
+
             <div v-if="settings.mail" class="bg-white shadow rounded-lg mb-6 p-6">
                 <h4 class="text-lg font-semibold text-gray-700 capitalize mb-4">Datos Servidor de Mail</h4>
                 
