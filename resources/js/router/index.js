@@ -36,13 +36,30 @@ const router = createRouter({
                 { path: 'accesses/create', component: AccessesForm, name: 'AccessesCreate', meta: { requiresAuth: true } },
                 { path: 'accesses/:id/edit', component: AccessesForm, name: 'AccessesEdit', meta: { requiresAuth: true } },
 
-                // Incidents
-                { path: 'incidents', component: () => import('../views/Admin/Incidents/Index.vue'), name: 'Incidents', meta: { requiresAuth: true } },
-                { path: 'incidents/create', component: () => import('../views/Admin/Incidents/Form.vue'), name: 'IncidentsCreate', meta: { requiresAuth: true } },
-                { path: 'incidents/:id/edit', component: () => import('../views/Admin/Incidents/Form.vue'), name: 'IncidentsEdit', meta: { requiresAuth: true } },
-
                 // Profile
                 { path: 'profile', component: () => import('../views/Profile.vue'), name: 'Profile', meta: { requiresAuth: true } },
+
+                // Inventory
+                { path: 'inventory', component: () => import('../views/Admin/Inventory/Index.vue'), name: 'Inventory', meta: { requiresAuth: true } },
+
+                // Inventory - Categories
+                { path: 'inventory/categories', component: () => import('../views/Admin/Inventory/Categories/Index.vue'), name: 'CategoriesIndex', meta: { requiresAuth: true } },
+                { path: 'inventory/categories/create', component: () => import('../views/Admin/Inventory/Categories/Form.vue'), name: 'CategoriesCreate', meta: { requiresAuth: true } },
+                { path: 'inventory/categories/:id/edit', component: () => import('../views/Admin/Inventory/Categories/Form.vue'), name: 'CategoriesEdit', meta: { requiresAuth: true } },
+
+                // Inventory - Locations
+                { path: 'inventory/locations', component: () => import('../views/Admin/Inventory/Locations/Index.vue'), name: 'LocationsIndex', meta: { requiresAuth: true } },
+                { path: 'inventory/locations/create', component: () => import('../views/Admin/Inventory/Locations/Form.vue'), name: 'LocationsCreate', meta: { requiresAuth: true } },
+                { path: 'inventory/locations/:id/edit', component: () => import('../views/Admin/Inventory/Locations/Form.vue'), name: 'LocationsEdit', meta: { requiresAuth: true } },
+
+                // Inventory - Rubros
+                { path: 'inventory/rubros', component: () => import('../views/Admin/Inventory/Rubros/Index.vue'), name: 'RubrosIndex', meta: { requiresAuth: true } },
+                { path: 'inventory/rubros/create', component: () => import('../views/Admin/Inventory/Rubros/Form.vue'), name: 'RubrosCreate', meta: { requiresAuth: true } },
+                { path: 'inventory/rubros/:id/edit', component: () => import('../views/Admin/Inventory/Rubros/Form.vue'), name: 'RubrosEdit', meta: { requiresAuth: true } },
+
+                // Inventory - Equipment
+                { path: 'inventory/equipment/create', component: () => import('../views/Admin/Inventory/Equipment/Form.vue'), name: 'EquipmentCreate', meta: { requiresAuth: true } },
+                { path: 'inventory/equipment/:id/edit', component: () => import('../views/Admin/Inventory/Equipment/Form.vue'), name: 'EquipmentEdit', meta: { requiresAuth: true } },
 
                 { path: '', redirect: '/dashboard' },
             ]

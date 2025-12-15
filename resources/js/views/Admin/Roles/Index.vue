@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6">
+    <div class="p-1 md:p-6">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">Roles</h1>
             <router-link to="/roles/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -13,10 +13,11 @@
                 <td class="py-3 px-6 text-left">{{ item.nombre_corto }}</td>
                 <td class="py-3 px-6 text-left">{{ item.descripcion }}</td>
                 <td class="py-3 px-6 text-left">
-                    <span :class="item.estado === 'activo' ? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600'"
-                        class="py-1 px-3 rounded-full text-xs">
-                        {{ item.estado }}
-                    </span>
+                    <div :class="item.estado === 'activo' ? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600'"
+                        class="w-8 h-8 rounded-full flex items-center justify-center mx-auto"
+                        :title="item.estado">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
                 </td>
                 <td class="py-3 px-6 text-center">
                     <div class="flex item-center justify-center">

@@ -17,7 +17,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="icono">Icono</label>
-                    <input v-model="form.icono" type="text" id="icono" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <IconPicker v-model="form.icono" />
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="orden">Orden</label>
@@ -45,8 +45,10 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import IconPicker from '../../../components/IconPicker.vue';
 
 const route = useRoute();
 const router = useRouter();

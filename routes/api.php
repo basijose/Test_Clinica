@@ -23,7 +23,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('roles', RoleController::class);
         Route::apiResource('accesses', AccessController::class);
-        Route::apiResource('incidents', \App\Http\Controllers\Admin\IncidentController::class);
+        
+        // Inventory Routes
+        Route::apiResource('inventory/categories', \App\Http\Controllers\Admin\Inventory\CategoryController::class);
+        Route::apiResource('inventory/locations', \App\Http\Controllers\Admin\Inventory\LocationController::class);
+        Route::apiResource('inventory/rubros', \App\Http\Controllers\Admin\Inventory\RubroController::class);
+        Route::apiResource('inventory/equipment', \App\Http\Controllers\Admin\Inventory\EquipmentController::class);
     });
 
     Route::get('/user', function (Request $request) {
