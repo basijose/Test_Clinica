@@ -81,7 +81,7 @@ const testEmailAddress = ref('');
 
 const fetchSettings = async () => {
     try {
-        const response = await axios.get('/api/settings');
+        const response = await axios.get('/api/admin/settings');
         settings.value = response.data;
     } catch (error) {
         console.error('Error fetching settings', error);
@@ -97,7 +97,7 @@ const saveSettings = async () => {
             });
         }
 
-        await axios.post('/api/settings', { settings: flatSettings });
+        await axios.post('/api/admin/settings', { settings: flatSettings });
         alert('Configuración guardada correctamente');
     } catch (error) {
         alert('Error al guardar la configuración');
@@ -108,7 +108,7 @@ const sendTestEmail = async () => {
     if (!testEmailAddress.value) return alert('Ingresa un email');
     
     try {
-        await axios.post('/api/settings/test-email', { email: testEmailAddress.value });
+        await axios.post('/api/admin/settings/test-email', { email: testEmailAddress.value });
         alert('Email enviado correctamente');
         openTestModal.value = false;
     } catch (error) {
