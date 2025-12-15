@@ -15,6 +15,7 @@
             </div>
             <nav class="mt-6 flex-1 overflow-y-auto">
                 <template v-for="item in menuItems" :key="item.id">
+                    <!-- External Link -->
                     <a v-if="isExternal(item.destino)" :href="item.destino" target="_blank"
                         class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                         :title="isSidebarCollapsed ? item.descripcion : ''">
@@ -24,12 +25,37 @@
                         <span v-if="!isSidebarCollapsed" class="mx-3">{{ item.descripcion }}</span>
                         <svg v-if="!isSidebarCollapsed" class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
+
+                    <!-- Dropdown Menu (Parent) -->
+                    <div v-else-if="item.children && item.children.length > 0">
+                        <button @click="toggleSubmenu(item.id)" 
+                            class="w-full flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 justify-between focus:outline-none"
+                            :class="{ 'bg-gray-100 text-gray-800': isSubmenuOpen(item.id) }"
+                            :title="isSidebarCollapsed ? item.descripcion : ''">
+                            <div class="flex items-center">
+                                <i v-if="item.icono" :class="[item.icono, 'text-lg w-6 text-center']"></i>
+                                <span v-if="!isSidebarCollapsed" class="mx-3">{{ item.descripcion }}</span>
+                            </div>
+                            <i v-if="!isSidebarCollapsed" class="fa-solid fa-chevron-down text-xs transition-transform duration-200" :class="{ 'transform rotate-180': isSubmenuOpen(item.id) }"></i>
+                        </button>
+                        
+                        <!-- Submenu Items -->
+                        <div v-show="isSubmenuOpen(item.id) && !isSidebarCollapsed" class="bg-gray-50">
+                            <router-link v-for="child in item.children" :key="child.id" :to="child.destino"
+                                class="flex items-center pl-14 pr-6 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                :class="{ 'text-blue-600 font-medium': $route.path.startsWith(child.destino) }">
+                                <i v-if="child.icono" :class="[child.icono, 'w-4 mr-2 text-center']"></i>
+                                <span>{{ child.descripcion }}</span>
+                            </router-link>
+                        </div>
+                    </div>
+
+                    <!-- Standard Link -->
                     <router-link v-else :to="item.destino"
                         class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                         :class="{ 'bg-gray-100 text-gray-800 border-r-4 border-blue-500': $route.path.startsWith(item.destino) }"
                         :title="isSidebarCollapsed ? item.descripcion : ''">
                         
-                        <!-- Icon Logic: Use item.icono if available, else generic icon -->
                         <i v-if="item.icono" :class="[item.icono, 'text-lg w-6 text-center']" :title="isSidebarCollapsed ? item.descripcion : ''"></i>
                         <svg v-else class="w-5 h-5" :class="{ 'mx-auto': isSidebarCollapsed }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
 
@@ -81,6 +107,21 @@
                             {{ item.descripcion }}
                             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                         </a>
+                        
+                        <!-- Mobile Submenu -->
+                        <div v-else-if="item.children && item.children.length > 0">
+                            <button @click="toggleSubmenu(item.id)" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 flex justify-between items-center">
+                                {{ item.descripcion }}
+                                <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200" :class="{ 'transform rotate-180': isSubmenuOpen(item.id) }"></i>
+                            </button>
+                            <div v-show="isSubmenuOpen(item.id)" class="pl-4">
+                                <router-link v-for="child in item.children" :key="child.id" :to="child.destino"
+                                    class="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                                    {{ child.descripcion }}
+                                </router-link>
+                            </div>
+                        </div>
+
                         <router-link v-else :to="item.destino"
                             class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                             {{ item.descripcion }}
@@ -123,9 +164,22 @@ const route = useRoute();
 const menuItems = ref([]);
 const mobileMenuOpen = ref(false);
 const isSidebarCollapsed = ref(true);
+const openSubmenus = ref([]);
 
 const toggleSidebar = () => {
     isSidebarCollapsed.value = !isSidebarCollapsed.value;
+};
+
+const toggleSubmenu = (id) => {
+    if (openSubmenus.value.includes(id)) {
+        openSubmenus.value = openSubmenus.value.filter(itemId => itemId !== id);
+    } else {
+        openSubmenus.value.push(id);
+    }
+};
+
+const isSubmenuOpen = (id) => {
+    return openSubmenus.value.includes(id);
 };
 
 const currentTitle = computed(() => {

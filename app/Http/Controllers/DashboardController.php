@@ -23,6 +23,12 @@ class DashboardController extends Controller
 
         $accesses = $role->accesses()
             ->where('estado', 'activo')
+            ->whereNull('parent_id')
+            ->with(['children' => function ($query) use ($role) {
+                $query->whereHas('roles', function ($q) use ($role) {
+                    $q->where('id', $role->id);
+                })->where('estado', 'activo')->orderBy('orden');
+            }])
             ->orderBy('orden')
             ->get();
 

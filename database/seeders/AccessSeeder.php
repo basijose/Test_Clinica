@@ -12,10 +12,23 @@ class AccessSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Access::updateOrCreate(['destino' => '/dashboard'], ['tipo' => 'menu', 'descripcion' => 'Dashboard', 'icono' => 'fa-solid fa-house', 'orden' => 1]);
-        \App\Models\Access::updateOrCreate(['destino' => '/users'], ['tipo' => 'menu', 'descripcion' => 'Usuarios', 'icono' => 'fa-solid fa-users', 'orden' => 2]);
-        \App\Models\Access::updateOrCreate(['destino' => '/roles'], ['tipo' => 'menu', 'descripcion' => 'Roles', 'icono' => 'fa-solid fa-shield-halved', 'orden' => 3]);
-        \App\Models\Access::updateOrCreate(['destino' => '/accesses'], ['tipo' => 'menu', 'descripcion' => 'Accesos', 'icono' => 'fa-solid fa-key', 'orden' => 4]);
-        \App\Models\Access::updateOrCreate(['destino' => '/inventory'], ['tipo' => 'menu', 'descripcion' => 'Inventario', 'icono' => 'fa-solid fa-boxes-stacked', 'orden' => 5]);
+        // Root Items
+        \App\Models\Access::updateOrCreate(['destino' => '/dashboard'], ['tipo' => 'menu', 'descripcion' => 'Dashboard', 'icono' => 'fa-solid fa-house', 'orden' => 1, 'parent_id' => null]);
+        \App\Models\Access::updateOrCreate(['destino' => '/inventory'], ['tipo' => 'menu', 'descripcion' => 'Inventario', 'icono' => 'fa-solid fa-boxes-stacked', 'orden' => 2, 'parent_id' => null]);
+        
+        // Configuración Parent
+        $config = \App\Models\Access::updateOrCreate(['destino' => '#'], ['tipo' => 'menu', 'descripcion' => 'Configuración', 'icono' => 'fa-solid fa-gear', 'orden' => 99, 'parent_id' => null]);
+
+        // Configuración Children
+        \App\Models\Access::updateOrCreate(['destino' => '/users'], ['tipo' => 'menu', 'descripcion' => 'Usuarios', 'icono' => 'fa-solid fa-users', 'orden' => 1, 'parent_id' => $config->id]);
+        \App\Models\Access::updateOrCreate(['destino' => '/roles'], ['tipo' => 'menu', 'descripcion' => 'Roles', 'icono' => 'fa-solid fa-shield-halved', 'orden' => 2, 'parent_id' => $config->id]);
+        \App\Models\Access::updateOrCreate(['destino' => '/accesses'], ['tipo' => 'menu', 'descripcion' => 'Accesos', 'icono' => 'fa-solid fa-key', 'orden' => 3, 'parent_id' => $config->id]);
+
+        // Assign all accesses to Admin
+        $admin = \App\Models\Role::where('nombre_corto', 'Admin')->first();
+        if ($admin) {
+            $allAccesses = \App\Models\Access::all();
+            $admin->accesses()->sync($allAccesses);
+        }
     }
 }
