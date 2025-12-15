@@ -3,11 +3,11 @@
         <h3 class="text-gray-700 text-3xl font-medium">Preferencias</h3>
 
         <div class="mt-8">
-            <div v-for="(groupSettings, groupName) in settings" :key="groupName" class="bg-white shadow rounded-lg mb-6 p-6">
-                <h4 class="text-lg font-semibold text-gray-700 capitalize mb-4">{{ groupName === 'mail' ? 'Configuración de Correo (SMTP)' : groupName }}</h4>
+            <div v-if="settings.mail" class="bg-white shadow rounded-lg mb-6 p-6">
+                <h4 class="text-lg font-semibold text-gray-700 capitalize mb-4">Datos Servidor de Mail</h4>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div v-for="setting in groupSettings" :key="setting.id" class="col-span-1">
+                    <div v-for="setting in settings.mail" :key="setting.id" class="col-span-1">
                         <label class="block text-sm font-medium text-gray-700">{{ setting.description }}</label>
                         <input v-if="setting.type !== 'boolean'" :type="setting.type" v-model="setting.value"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
