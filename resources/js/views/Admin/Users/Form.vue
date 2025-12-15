@@ -67,7 +67,7 @@ const isEditing = computed(() => route.params.id !== undefined);
 
 onMounted(async () => {
     try {
-        const rolesResponse = await axios.get('/api/admin/roles');
+        const rolesResponse = await axios.get('/api/admin/roles?all=true');
         roles.value = rolesResponse.data;
 
         if (isEditing.value) {

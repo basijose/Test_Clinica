@@ -63,7 +63,7 @@ const isEditing = computed(() => route.params.id !== undefined);
 
 onMounted(async () => {
     try {
-        const accessesResponse = await axios.get('/api/admin/accesses');
+        const accessesResponse = await axios.get('/api/admin/accesses?all=true');
         accesses.value = accessesResponse.data;
 
         if (isEditing.value) {

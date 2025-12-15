@@ -36,6 +36,11 @@ const router = createRouter({
                 { path: 'accesses/create', component: AccessesForm, name: 'AccessesCreate', meta: { requiresAuth: true } },
                 { path: 'accesses/:id/edit', component: AccessesForm, name: 'AccessesEdit', meta: { requiresAuth: true } },
 
+                // Incidents
+                { path: 'incidents', component: () => import('../views/Admin/Incidents/Index.vue'), name: 'Incidents', meta: { requiresAuth: true } },
+                { path: 'incidents/create', component: () => import('../views/Admin/Incidents/Form.vue'), name: 'IncidentsCreate', meta: { requiresAuth: true } },
+                { path: 'incidents/:id/edit', component: () => import('../views/Admin/Incidents/Form.vue'), name: 'IncidentsEdit', meta: { requiresAuth: true } },
+
                 // Profile
                 { path: 'profile', component: () => import('../views/Profile.vue'), name: 'Profile', meta: { requiresAuth: true } },
 

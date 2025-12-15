@@ -6,11 +6,19 @@
                 <router-link to="/dashboard" class="text-xl font-bold text-gray-800 hover:text-blue-600">Panel CNF</router-link>
             </div>
             <nav class="mt-6">
-                <router-link v-for="item in menuItems" :key="item.id" :to="item.destino"
-                    class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800"
-                    :class="{ 'bg-gray-100 text-gray-800 border-r-4 border-blue-500': $route.path.startsWith(item.destino) }">
-                    <span class="mx-3">{{ item.descripcion }}</span>
-                </router-link>
+                <template v-for="item in menuItems" :key="item.id">
+                    <a v-if="isExternal(item.destino)" :href="item.destino" target="_blank"
+                        class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span class="mx-3">{{ item.descripcion }}</span>
+                        <svg class="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                    <router-link v-else :to="item.destino"
+                        class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                        :class="{ 'bg-gray-100 text-gray-800 border-r-4 border-blue-500': $route.path.startsWith(item.destino) }">
+                        <span class="mx-3">{{ item.descripcion }}</span>
+                    </router-link>
+                </template>
+                
                 <div v-if="auth.user" class="px-6 py-3 border-t border-gray-200 mt-auto">
                     <router-link to="/profile" class="flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
                         <div class="flex-shrink-0">
@@ -48,10 +56,17 @@
             <!-- Mobile Menu -->
             <div v-if="mobileMenuOpen" class="md:hidden bg-white shadow-md">
                 <nav class="px-2 pt-2 pb-4 space-y-1">
-                    <router-link v-for="item in menuItems" :key="item.id" :to="item.destino"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
-                        {{ item.descripcion }}
-                    </router-link>
+                    <template v-for="item in menuItems" :key="item.id">
+                        <a v-if="isExternal(item.destino)" :href="item.destino" target="_blank"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 flex justify-between items-center">
+                            {{ item.descripcion }}
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                        <router-link v-else :to="item.destino"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                            {{ item.descripcion }}
+                        </router-link>
+                    </template>
                     <button v-if="auth.user" @click="handleLogout" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                         Cerrar Sesión
                     </button>
@@ -105,5 +120,9 @@ onMounted(async () => {
 
 const handleLogout = async () => {
     await auth.logout();
+};
+
+const isExternal = (url) => {
+    return url.startsWith('http://') || url.startsWith('https://');
 };
 </script>

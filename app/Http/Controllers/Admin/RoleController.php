@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return \App\Models\Role::all();
+        if ($request->has('all')) {
+            return \App\Models\Role::all();
+        }
+
+        $perPage = $request->input('per_page', 25);
+        $sortBy = $request->input('sort_by', 'id');
+        $sortOrder = $request->input('sort_order', 'desc');
+
+        return \App\Models\Role::orderBy($sortBy, $sortOrder)
+            ->paginate($perPage);
     }
 
     public function store(Request $request)

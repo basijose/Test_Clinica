@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('roles', RoleController::class);
         Route::apiResource('accesses', AccessController::class);
+        Route::apiResource('incidents', \App\Http\Controllers\Admin\IncidentController::class);
     });
 
     Route::get('/user', function (Request $request) {

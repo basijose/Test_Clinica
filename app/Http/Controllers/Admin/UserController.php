@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return \App\Models\User::with('role')->get();
+        $perPage = $request->input('per_page', 25);
+        $sortBy = $request->input('sort_by', 'id');
+        $sortOrder = $request->input('sort_order', 'desc');
+
+        return \App\Models\User::with('role')
+            ->orderBy($sortBy, $sortOrder)
+            ->paginate($perPage);
     }
 
     public function store(Request $request)
