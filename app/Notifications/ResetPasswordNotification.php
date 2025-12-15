@@ -14,30 +14,30 @@ class ResetPasswordNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public $token;
+
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
+        $url = config('app.url')."/reset-password/{$this->token}?email={$notifiable->getEmailForPasswordReset()}";
+
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Restablecer Contraseña - PANEL CNF')
+            ->greeting('¡Hola!')
+            ->line('Recibiste este correo porque solicitaste restablecer tu contraseña para tu cuenta en PANEL CNF.')
+            ->action('Restablecer Contraseña', $url)
+            ->line('Este enlace de restablecimiento expirará en 60 minutos.')
+            ->line('Si no solicitaste restablecer tu contraseña, no es necesario que realices ninguna acción.')
+            ->salutation('Saludos, el equipo de PANEL CNF');
     }
 
     /**
