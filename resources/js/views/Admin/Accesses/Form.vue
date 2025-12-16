@@ -30,6 +30,12 @@
                         <option value="inactivo">Inactivo</option>
                     </select>
                 </div>
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" v-model="form.show_on_dashboard" class="form-checkbox h-5 w-5 text-blue-600">
+                        <span class="ml-2 text-gray-700 font-bold">Mostrar en Dashboard</span>
+                    </label>
+                </div>
                 <div class="flex items-center justify-between">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Guardar
@@ -59,7 +65,8 @@ const form = ref({
     tipo: 'menu',
     icono: '',
     orden: 0,
-    estado: 'activo'
+    estado: 'activo',
+    show_on_dashboard: true
 });
 
 const isEditing = computed(() => route.params.id !== undefined);

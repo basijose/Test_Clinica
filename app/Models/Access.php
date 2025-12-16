@@ -9,7 +9,7 @@ class Access extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['parent_id', 'destino', 'tipo', 'descripcion', 'icono', 'orden', 'estado'];
+    protected $fillable = ['parent_id', 'destino', 'tipo', 'descripcion', 'icono', 'orden', 'estado', 'show_on_dashboard'];
 
     public function roles()
     {

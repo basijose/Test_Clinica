@@ -30,6 +30,7 @@ class AccessController extends Controller
             'icono' => 'nullable|string|max:255',
             'orden' => 'required|integer',
             'estado' => 'required|string|in:activo,inactivo',
+            'show_on_dashboard' => 'boolean',
         ]);
 
         $access = \App\Models\Access::create($validated);
@@ -51,6 +52,7 @@ class AccessController extends Controller
             'icono' => 'nullable|string|max:255',
             'orden' => 'sometimes|integer',
             'estado' => 'sometimes|string|in:activo,inactivo',
+            'show_on_dashboard' => 'boolean',
         ]);
 
         $access->update($validated);

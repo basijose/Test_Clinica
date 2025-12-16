@@ -30,7 +30,8 @@ const menuItems = ref([]);
 onMounted(async () => {
     try {
         const response = await axios.get('/api/dashboard');
-        menuItems.value = response.data;
+        // Filter items to only show those with show_on_dashboard = true (or 1)
+        menuItems.value = response.data.filter(item => item.show_on_dashboard == 1 || item.show_on_dashboard === true);
     } catch (e) {
         console.error('Error fetching menu', e);
     }
