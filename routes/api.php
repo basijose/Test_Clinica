@@ -34,6 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('inventory/locations', \App\Http\Controllers\Admin\Inventory\LocationController::class);
         Route::apiResource('inventory/rubros', \App\Http\Controllers\Admin\Inventory\RubroController::class);
         Route::apiResource('inventory/equipment', \App\Http\Controllers\Admin\Inventory\EquipmentController::class);
+
+        // Interventions
+        Route::apiResource('interventions', \App\Http\Controllers\Admin\InterventionController::class);
     });
 
     Route::get('/user', function (Request $request) {

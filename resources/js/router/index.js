@@ -64,6 +64,11 @@ const router = createRouter({
                 { path: 'inventory/equipment/create', component: () => import('../views/Admin/Inventory/Equipment/Form.vue'), name: 'EquipmentCreate', meta: { requiresAuth: true } },
                 { path: 'inventory/equipment/:id/edit', component: () => import('../views/Admin/Inventory/Equipment/Form.vue'), name: 'EquipmentEdit', meta: { requiresAuth: true } },
 
+                // Interventions
+                { path: 'interventions', component: () => import('../views/Admin/Interventions/Index.vue'), name: 'Interventions', meta: { requiresAuth: true } },
+                { path: 'interventions/create', component: () => import('../views/Admin/Interventions/Form.vue'), name: 'InterventionsCreate', meta: { requiresAuth: true } },
+                { path: 'interventions/:id/edit', component: () => import('../views/Admin/Interventions/Form.vue'), name: 'InterventionsEdit', meta: { requiresAuth: true } },
+
                 { path: '', redirect: '/dashboard' },
             ]
         },

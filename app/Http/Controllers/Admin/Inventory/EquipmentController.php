@@ -20,7 +20,10 @@ class EquipmentController extends Controller
                   ->orWhere('serial', 'like', "%{$search}%")
                   ->orWhere('attributes', 'like', "%{$search}%") // Basic JSON search
                   ->orWhereHas('rubro', function($q) use ($search) {
-                      $q->where('nombre', 'like', "%{$search}%");
+                      $q->where('nombre', 'like', "%{$search}%")
+                        ->orWhereHas('category', function($q2) use ($search) {
+                            $q2->where('nombre', 'like', "%{$search}%");
+                        });
                   })
                   ->orWhereHas('location', function($q) use ($search) {
                       $q->where('nombre', 'like', "%{$search}%");

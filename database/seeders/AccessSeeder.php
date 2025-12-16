@@ -15,6 +15,7 @@ class AccessSeeder extends Seeder
         // Root Items
         \App\Models\Access::updateOrCreate(['destino' => '/dashboard'], ['tipo' => 'menu', 'descripcion' => 'Dashboard', 'icono' => 'fa-solid fa-house', 'orden' => 1, 'parent_id' => null]);
         \App\Models\Access::updateOrCreate(['destino' => '/inventory'], ['tipo' => 'menu', 'descripcion' => 'Inventario', 'icono' => 'fa-solid fa-boxes-stacked', 'orden' => 2, 'parent_id' => null]);
+        \App\Models\Access::updateOrCreate(['destino' => '/interventions'], ['tipo' => 'menu', 'descripcion' => 'Intervenciones', 'icono' => 'fa-solid fa-screwdriver-wrench', 'orden' => 3, 'parent_id' => null]);
         
         // Configuración Parent
         $config = \App\Models\Access::updateOrCreate(['destino' => '#'], ['tipo' => 'menu', 'descripcion' => 'Configuración', 'icono' => 'fa-solid fa-gear', 'orden' => 99, 'parent_id' => null]);
