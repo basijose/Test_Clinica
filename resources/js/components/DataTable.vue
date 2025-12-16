@@ -21,7 +21,7 @@
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th v-for="header in headers" :key="header.key" @click="sortBy(header.key)"
-                            class="py-3 px-6 text-left cursor-pointer hover:bg-gray-300 transition-colors duration-200">
+                            :class="['py-3 px-6 cursor-pointer hover:bg-gray-300 transition-colors duration-200', header.align ? `text-${header.align}` : 'text-left']">
                             <div class="flex items-center">
                                 {{ header.label }}
                                 <span v-if="internalSortBy === header.key" class="ml-1">

@@ -14,7 +14,7 @@
                 <td class="py-3 px-6 text-left">{{ item.destino }}</td>
                 <td class="py-3 px-6 text-left">{{ item.tipo }}</td>
                 <td class="py-3 px-6 text-left">{{ item.orden }}</td>
-                <td class="py-3 px-6 text-left">
+                <td class="py-3 px-6 text-center">
                     <div :class="item.estado === 'activo' ? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600'"
                         class="w-8 h-8 rounded-full flex items-center justify-center mx-auto"
                         :title="item.estado">
@@ -63,9 +63,8 @@ const headers = [
     { key: 'destino', label: 'Destino' },
     { key: 'tipo', label: 'Tipo' },
     { key: 'orden', label: 'Orden' },
-    { key: 'estado', label: 'Estado' },
-    { key: 'show_on_dashboard', label: 'Dash' },
-    { key: 'actions', label: 'Acciones' },
+    { key: 'estado', label: 'Estado', align: 'center' },
+    { key: 'show_on_dashboard', label: 'Dash', align: 'center' },
 ];
 
 const currentOptions = ref({
