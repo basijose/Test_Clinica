@@ -14,12 +14,19 @@
                 <td class="py-3 px-6 text-left">{{ item.destino }}</td>
                 <td class="py-3 px-6 text-left">{{ item.tipo }}</td>
                 <td class="py-3 px-6 text-left">{{ item.orden }}</td>
+                <td class="py-3 px-6 text-left">{{ item.orden }}</td>
                 <td class="py-3 px-6 text-left">
                     <div :class="item.estado === 'activo' ? 'bg-green-200 text-green-600' : 'bg-red-200 text-red-600'"
                         class="w-8 h-8 rounded-full flex items-center justify-center mx-auto"
                         :title="item.estado">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
+                </td>
+                <td class="py-3 px-6 text-center">
+                    <button @click="toggleDashboardVisibility(item)" class="focus:outline-none transform hover:scale-110 transition-transform duration-200">
+                        <i v-if="item.show_on_dashboard" class="fa-solid fa-eye text-green-500 text-lg" title="Visible en Dashboard"></i>
+                        <i v-else class="fa-solid fa-eye-slash text-gray-400 text-lg" title="Oculto en Dashboard"></i>
+                    </button>
                 </td>
                 <td class="py-3 px-6 text-center">
                     <div class="flex item-center justify-center">
@@ -58,6 +65,7 @@ const headers = [
     { key: 'tipo', label: 'Tipo' },
     { key: 'orden', label: 'Orden' },
     { key: 'estado', label: 'Estado' },
+    { key: 'show_on_dashboard', label: 'Dash' },
 ];
 
 const currentOptions = ref({
@@ -96,6 +104,24 @@ const deleteAccess = async (id) => {
     } catch (e) {
         console.error(e);
         alert('Error al eliminar el acceso');
+    }
+};
+
+const toggleDashboardVisibility = async (item) => {
+    try {
+        const newValue = !item.show_on_dashboard;
+        // Optimistic update
+        item.show_on_dashboard = newValue;
+        
+        await axios.put(`/api/admin/accesses/${item.id}`, {
+            ...item,
+            show_on_dashboard: newValue
+        });
+    } catch (e) {
+        console.error(e);
+        // Revert on error
+        item.show_on_dashboard = !item.show_on_dashboard;
+        alert('Error al actualizar la visibilidad');
     }
 };
 </script>

@@ -66,7 +66,7 @@ const form = ref({
     icono: '',
     orden: 0,
     estado: 'activo',
-    show_on_dashboard: true
+    show_on_dashboard: false
 });
 
 const isEditing = computed(() => route.params.id !== undefined);
