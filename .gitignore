@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+deploy.zip
+database/backups/
+unzip.php
+import_db.php
